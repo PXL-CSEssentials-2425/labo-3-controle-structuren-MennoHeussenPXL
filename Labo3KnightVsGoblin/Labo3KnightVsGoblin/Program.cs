@@ -1,4 +1,115 @@
-﻿/* 
+﻿Console.WriteLine("Welcome to Knight VS Goblin!");
+Console.WriteLine("----------------------------");
+
+Random randomNumberGenerator = new Random();
+
+Console.WriteLine("Enter Knight Healt: ");
+string input = Console.ReadLine();
+
+int attempts = 0;
+
+int knightHealt;
+if (int.TryParse(input, out knightHealt))
+{
+    if (0 > knightHealt || knightHealt > 100)
+    {
+        Console.WriteLine("Invalid input, delfault healt 100 is used");
+        knightHealt = 100;
+    }
+}
+else
+{
+    Console.WriteLine("Invalid input, delfault healt 100 is used");
+    knightHealt = 100;
+}
+
+
+int goblinHealt = randomNumberGenerator.Next(30, 101);
+
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine($"Knight healt: {knightHealt}");
+Console.WriteLine($"Goblin healt: {goblinHealt}");
+Console.ResetColor();
+
+//for(int attempts = 1; attempts <= 4 ; attempts++)
+do 
+{
+    attempts += attempts; 
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine($"Ronde: {attempts}");
+    Console.ResetColor();
+    int attackKnight = 10;
+    int attackGoblin = randomNumberGenerator.Next(5, 16); ;
+
+    Console.WriteLine("Enter: 1 to attack, 2 to heal");
+    string number = Console.ReadLine();
+
+    Console.WriteLine("You're Turn");
+
+    switch (number)
+    {
+        case "1":
+            goblinHealt -= attackKnight;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"You attacked Goblin by {attackKnight}");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"Knight healt: {knightHealt}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Goblin healt: {goblinHealt}(-{attackKnight})");
+            Console.ResetColor();
+            break;
+        case "2":
+            knightHealt += 10;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"You Healed by {10}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Knight healt: {knightHealt}(+10)");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"Goblin healt: {goblinHealt}");
+            Console.ResetColor();
+            break;
+        default:
+            Console.WriteLine($"{number} is Invalid!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Knight healt: {knightHealt}");
+            Console.WriteLine($"Goblin healt: {goblinHealt}");
+            Console.ResetColor();
+            break;
+    }
+
+
+    Console.WriteLine("Goblin's Turn");
+    System.Threading.Thread.Sleep(1000);
+
+    if (goblinHealt > 0)
+    {
+        knightHealt -= attackGoblin;
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine($"Goblin attacked you by {attackGoblin}");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"Knight healt: {knightHealt}(-{attackGoblin})");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine($"Goblin healt: {goblinHealt}");
+        Console.ResetColor();
+    }
+
+
+    if (goblinHealt <= 0)
+    {
+        Console.WriteLine("Goblin Died! \nYou Won!!");
+    }
+
+
+    if (knightHealt <= 0)
+    {
+        Console.WriteLine("You Died!");
+    }
+} while (knightHealt > 0 && goblinHealt > 0);
+
+
+
+
+/* 
  * Deel 1
  * 
  * We gaan een applicatie maken waarin de speler als ridder tegen een goblin moet vechten.
